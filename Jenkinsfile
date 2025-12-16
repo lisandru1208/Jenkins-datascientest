@@ -41,6 +41,7 @@ stages {
             script {
                 withCredentials([string(credentialsId: 'DOCKER_HUB_PASS', variable: 'DOCKER_PASS')]) {
                     sh '''
+                    set -x
                     echo $DOCKER_PASS | docker login -u $DOCKER_ID --password-stdin
                     docker push $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
                     '''
