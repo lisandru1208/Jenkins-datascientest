@@ -45,7 +45,7 @@ stages {
             sh "echo $DOCKER_PASS | docker login -u myusername --password-stdin"
         }
     }
-  }
+  } 
   stage('Docker Push'){ //we pass the built image to our docker hub account
     environment
     {
