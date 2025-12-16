@@ -36,7 +36,7 @@ stages {
       }
     }
   }
-    stage('Docker Push') {
+/*     stage('Docker Push') {
         steps {
             script {
                 withCredentials([string(credentialsId: 'DOCKER_HUB_PASS', variable: 'DOCKER_PASS')]) {
@@ -47,7 +47,7 @@ stages {
                 }
             }
         }
-    }
+    } */
   stage('Deploiement en dev'){
     environment {
     KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
