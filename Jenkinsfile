@@ -36,6 +36,16 @@ stages {
       }
     }
   }
+ stage('Docker login'){ //we pass the built image to our docker hub account
+    environment {
+        DOCKER_PASS = credentials('DOCKER_HUB_PASS')
+    }
+    steps {
+        script {
+            sh "echo $DOCKER_PASS | docker login -u myusername --password-stdin"
+        }
+    }
+  }
   stage('Docker Push'){ //we pass the built image to our docker hub account
     environment
     {
