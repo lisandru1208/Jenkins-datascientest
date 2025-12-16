@@ -41,12 +41,8 @@ stages {
             script {
                 withCredentials([string(credentialsId: 'DOCKER_HUB_PASS', variable: 'DOCKER_PASS')]) {
                     sh '''
-                    set -x
-                    export DOCKER_CLI_EXPERIMENTAL=enabled
-                    mkdir -p $WORKSPACE/.docker
-                    export DOCKER_CONFIG=$WORKSPACE/.docker
-                    echo $DOCKER_PASS | docker login -u $DOCKER_ID --password-stdin
-                    docker push $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
+                        echo $DOCKER_PASS | docker login -u $DOCKER_ID --password-stdin
+                        docker push $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG --quiet=false --progress=plain
                     '''
                 }
             }
