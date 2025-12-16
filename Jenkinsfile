@@ -36,16 +36,20 @@ stages {
       }
     }
   }
-stage('Docker Push') {
-  steps {
-    withCredentials([string(credentialsId: 'DOCKER_HUB_PASS', variable: 'DOCKER_PASS')]) {
-      sh '''
-        echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
-        docker push "$DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG"
-      '''
+  stage('Docker Push'){ //we pass the built image to our docker hub account
+    environment
+    {
+      DOCKER_PASS = credentials("DOCKER_HUB_PASS") // we retrieve  docker password from secret text called docker_hub_pass saved on jenkins
+    }
+    steps {
+      script {
+        sh '''
+        docker login -u $DOCKER_ID -p $DOCKER_PASS
+        docker push $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
+        '''
+      }
     }
   }
-}
   stage('Deploiement en dev'){
     environment {
     KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
